@@ -1,0 +1,5 @@
+Python = 3.12.4
+NumPy =  1.26.4
+Mediapipe =  0.10.14
+OpenCV =  4.10.0
+Streamlit =  1.32.0
