@@ -11,6 +11,9 @@ Real-time statistics display
 Technology Stack
 
 MediaPipe: For pose estimation and landmark detection
+
 OpenCV: For image processing and webcam feed handling
+
 Streamlit: For the web application interface
+
 Python: Primary programming language
