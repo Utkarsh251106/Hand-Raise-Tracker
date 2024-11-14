@@ -10,6 +10,8 @@ Real-time statistics display
 
 Technology Stack
 
+NumPy: For calculation of the angle
+
 MediaPipe: For pose estimation and landmark detection
 
 OpenCV: For image processing and webcam feed handling
