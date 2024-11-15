@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - Hand-Raise-Tracker
+name: Build and deploy Python app to Azure Web App - Hand-Raise-Tracker-App
 
 on:
   push:
@@ -65,14 +65,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_84574402E6F84DCCBDCFA79F2E05BB93 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_315A46FE3F2C4F4DB93247C77EB7FB2F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_622770BAAE7C49978CAC0891F73E74F0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2F62C1223A064BD5A782337F621CF7D7 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D9E0A141D7144486856B2A15FC67F98A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F1B018C9CDA04B97994DED2F39136E65 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'Hand-Raise-Tracker'
+          app-name: 'Hand-Raise-Tracker-App'
           slot-name: 'Production'
           
