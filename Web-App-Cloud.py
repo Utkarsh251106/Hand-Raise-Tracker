@@ -1,3 +1,5 @@
+import numpy as np
+import mediapipe as mp
 import streamlit as st
 import sys
 import traceback
@@ -5,8 +7,6 @@ import traceback
 # Add error handling for imports
 try:
     import cv2
-    import numpy as np
-    import mediapipe as mp
 except ImportError as e:
     st.error(f"Import error: {e}")
     st.error(traceback.format_exc())
