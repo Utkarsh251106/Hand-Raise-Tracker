@@ -21,11 +21,13 @@ pip install -r requirements.txt
 ```
 ### Step 4: To run the code or web-app:
   To run the code
-  
 ```bash
-# Finally run the following command
-python Code.ipynb
+# Start the Jupyter Notebook environment using the command
+jupyter notebook
 ```
+#### Run your Code.ipynb file
+
+
 To run the Web-App
 ```bash
 # Finally run the following command(Upload a video)
