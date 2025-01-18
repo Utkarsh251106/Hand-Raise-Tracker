@@ -1,21 +1,39 @@
-A real-time computer vision application that detects and counts hand raises using MediaPipe for Pose Detection, OpenCV for video related works and NumPy for calculating the angle, wrapped in a user-friendly Streamlit interface.
+## Description
+Hand Raise Tracker is a pose estimation detection project which counts how many times both the hands are raised straight up in the air simultaneously. It works by first getting all the necessary points which are to be used for calculation using Mediapipe library. After that it access camera using OpenCV to find and estimate the pose. Then the calculation of the angle between pelvic region, shoulder and elbow is done using NumPy library and a tracker is used to count the number of hand raises.
 
-Features
+# How to run it?
+### Step 1: Clone the Repository:
+  
+```bash
+https://github.com/Utkarsh251106/Hand-Raise-Tracker/tree/Second
+```
+### Step 2: Create a conda environment:
+  
+```bash
+conda create -n venv python=3.12.7 -y
+conda activate venv
+```
 
-Real-time hand raise detection through webcam feed
-Automatic counting of hand raise events
-Interactive web interface using Streamlit
-Visual feedback with pose landmarks
-Real-time statistics display
+### Step 3: Install the requirements:
+  
+```bash
+pip install -r requirements.txt
+```
+### Step 4: To run the code or web-app:
+  To run the code
+  
+```bash
+# Finally run the following command
+python Code.ipynb
+```
+To run the Web-App
+```bash
+# Finally run the following command(Upload a video)
+streamlit run Web-App-Cloud.py
 
-Technology Stack
+# Finally run the following command(For Real Time)
+streamlit run Web-App.py
+```
+### If you choose to upload the video, this is what should see
 
-NumPy: For calculation of the angle
-
-MediaPipe: For pose estimation and landmark detection
-
-OpenCV: For image processing and webcam feed handling
-
-Streamlit: For the web application interface
-
-Python: Primary programming language
+<img width="781" alt="Upload output" src="https://github.com/user-attachments/assets/b9f7b1e4-4f06-4b23-8f08-c389bcd0302f" />
