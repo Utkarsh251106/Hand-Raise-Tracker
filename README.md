@@ -30,6 +30,12 @@ jupyter notebook
 
 To run the Web-App
 ```bash
+# Finally run the following command(Upload a video)
+streamlit run Web-App-Cloud.py
+
 # Finally run the following command(For Real Time)
 streamlit run Web-App.py
 ```
+### If you choose to upload the video, this is what should see
+
+<img width="781" alt="Upload output" src="https://github.com/user-attachments/assets/b9f7b1e4-4f06-4b23-8f08-c389bcd0302f" />
