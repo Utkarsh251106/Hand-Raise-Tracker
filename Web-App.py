@@ -38,68 +38,67 @@ if 'previous_position' not in st.session_state:
     st.session_state.previous_position = "Unknown"
 
 # Create a checkbox for controlling video capture
-run = st.checkbox('Press to Start/Stop the camera', value=False)
+run = st.checkbox('Press to Run/Stop')
 FRAME_WINDOW = st.image([])
 
 # Display the button and counter outside the loop
 counter_display = st.empty()  # Placeholder for counter display
 
-# Initialize camera
 cap = cv2.VideoCapture(0)
 
-try:
-    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
-        while run:
-            success, frame = cap.read()
-            if not success:
-                st.warning("Failed to capture video.")
-                break
+with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+    while run:
+        success, frame = cap.read()
+        if not success:
+            st.warning("Failed to capture video.")
+            break
 
-            frame = cv2.flip(frame, 1)
-            image_height, image_width, _ = frame.shape
-            rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.flip(frame, 1)
+        image_height, image_width, _ = frame.shape
+        rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
 
-            results = pose.process(rgb_image)
-            if results.pose_landmarks:
-                mp_drawings.draw_landmarks(
-                    rgb_image,
-                    results.pose_landmarks, 
-                    mp_pose.POSE_CONNECTIONS,
-                    mp_drawings.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2),
-                    mp_drawings.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
-                )
-                
-                landmarks = results.pose_landmarks.landmark
-                
-                left_hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x * image_width, 
-                            landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y * image_height]
-                left_elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x * image_width, 
-                              landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y * image_height]
-                left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x * image_width, 
-                                 landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y * image_height]
-                
-                right_hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x * image_width, 
-                             landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y * image_height]
-                right_elbow = [landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].x * image_width, 
-                               landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].y * image_height]
-                right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x * image_width, 
-                                  landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y * image_height]
-                
-                left_angle = calc_angle(left_shoulder, left_elbow, left_hip)
-                right_angle = calc_angle(right_shoulder, right_elbow, right_hip)
-                
-                if left_angle < 20 and right_angle < 20 and st.session_state.previous_position != "Up":
-                    st.session_state.counter += 1
-                
-                st.session_state.previous_position = "Up" if left_angle < 20 and right_angle < 20 else "Not Up"
+        results = pose.process(rgb_image)
+        if results.pose_landmarks:
+            mp_drawings.draw_landmarks(
+                rgb_image,  # Draw on the RGB image
+                results.pose_landmarks, 
+                mp_pose.POSE_CONNECTIONS,
+                mp_drawings.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2),
+                mp_drawings.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
+            )
             
-            # Display the frame in Streamlit
-            FRAME_WINDOW.image(rgb_image)
+            landmarks = results.pose_landmarks.landmark
+            
+            left_hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x * image_width, 
+                        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y * image_height]
+            left_elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x * image_width, 
+                          landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y * image_height]
+            left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x * image_width, 
+                             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y * image_height]
+            
+            right_hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x * image_width, 
+                         landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y * image_height]
+            right_elbow = [landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].x * image_width, 
+                           landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].y * image_height]
+            right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x * image_width, 
+                              landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y * image_height]
+            
+            left_angle = calc_angle(left_shoulder, left_elbow, left_hip)
+            right_angle = calc_angle(right_shoulder, right_elbow, right_hip)
+            
+            if left_angle < 20 and right_angle < 20 and st.session_state.previous_position != "Up":
+                st.session_state.counter += 1
+            
+            st.session_state.previous_position = "Up" if left_angle < 20 and right_angle < 20 else "Not Up"
+        
+        # Display the frame in Streamlit
+        FRAME_WINDOW.image(rgb_image)  # Ensure RGB image is passed
 
-            # Update the counter display
-            counter_display.metric(label="Counter", value=st.session_state.counter)
+        # Update the counter display
+        counter_display.metric(label="Counter", value=st.session_state.counter)
+        
+        # Option to close the camera
+        if not run:
+            break
 
-finally:
-    # Ensure proper cleanup
-    cap.release()
-    cv2.destroyAllWindows()
+cap.release()
