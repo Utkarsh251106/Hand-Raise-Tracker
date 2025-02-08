@@ -5,7 +5,7 @@ Hand Raise Tracker is a pose estimation detection project which counts how many 
 ### Step 1: Clone the Repository:
   
 ```bash
-git clone https://github.com/Utkarsh251106/Hand-Raise-Tracker/tree/Second
+git clone https://github.com/Utkarsh251106/Hand-Raise-Tracker
 ```
 ### Step 2: Create a conda environment:
   
